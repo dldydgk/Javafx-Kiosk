@@ -24,7 +24,7 @@ Parent root = (BorderPane)FXMLLoader.load(getClass().getResource("Sample.fxml"))
     
     Kiosksum kiosksum = new Kiosksum();
 ```
-### 메소드를 생성하여 + 버튼을 눌렀을 시 값이 하나씩 증가
+### menu_append()라는 메소드를 생성하여 + 버튼을 눌렀을 시 값이 하나씩 증가
 ``` java
  @FXML
     public void M1pButtonAction(ActionEvent event) {
