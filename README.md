@@ -9,7 +9,7 @@ Parent root = (BorderPane)FXMLLoader.load(getClass().getResource("Sample.fxml"))
 			primaryStage.setTitle("혼자 만드는 키오스크");
 			primaryStage.show();
 ``` 
-## 사용할 변수와 액션들
+## 사용할 변수와 액션 등록
 ``` java
  @FXML private Button CalButton, CancleButton;
     @FXML private Button M1pButton, M2pButton, M3pButton;
