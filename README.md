@@ -9,7 +9,7 @@ Parent root = (BorderPane)FXMLLoader.load(getClass().getResource("Sample.fxml"))
 			primaryStage.setTitle("혼자 만드는 키오스크");
 			primaryStage.show();
 ``` 
-## 사용할 변수들과 액션을 위한 버튼들
+## 사용할 변수와 액션들
 ``` java
  @FXML private Button CalButton, CancleButton;
     @FXML private Button M1pButton, M2pButton, M3pButton;
@@ -234,6 +234,7 @@ if(rs.next()) {
 	}
 ```
 ### 전체 조회 버튼 클릭시 변수 초기화하고 db접속 후 쿼리 실행
+#### to_char 를 사용하여 정확한 시간과 날짜를 몇일, 몇분, 몇초로 하였다
 ``` java
 @FXML
 	private void searchButtonAction(ActionEvent event) {
@@ -306,7 +307,7 @@ ObservableList<Orderlist>datelist = FXCollections.observableArrayList();
 			alert.setContentText("시작날짜와 종료날짜를 모두 선택하세요");
 			alert.show();
 ```
-### 그 외에는 DB에 접속하고 쿼리문을 실행한다
+### 그 외에는 DB에 접속하고 쿼리문을 실행한다 
 ``` java
 	DBconnect3 conn3 = new DBconnect3();
 			Connection conn = conn3.getconn();
@@ -323,6 +324,7 @@ ObservableList<Orderlist>datelist = FXCollections.observableArrayList();
 				
 				ResultSet rs = ps.executeQuery();
 ```
+
 ### 주문리스트 데이터를 처리하여 ObservableList에 추가하고, 각 주문 항목의 수량을 계산하고, 텍스트 영역에 결과를 표시한다. 마지막으로, 데이터베이스 관련 객체들을 닫는다
 ``` java
 ObservableList<Orderlist> datelist = FXCollections.observableArrayList();
@@ -362,7 +364,7 @@ ObservableList<Orderlist> datelist = FXCollections.observableArrayList();
 				e.printStackTrace();
 			}
 ```
-### 판매수량 그래프 버튼을 눌렀을 시 
+### 판매수량 그래프 버튼을 눌렀을 시  
 ``` java
 @FXML
 	private void countButtonAction(ActionEvent evnet) {
@@ -374,6 +376,20 @@ ObservableList<Orderlist> datelist = FXCollections.observableArrayList();
 				));
 ```
 ![image](https://github.com/dldydgk/Javafx-Kiosk/assets/126844590/35f36324-f459-499a-9242-d6593b7aebc0)
+
+### 판매 금액 그래프 버튼을 눌렀을 시 
+``` java
+@FXML
+	private void sumButtonAction(ActionEvent evnet) {
+		rsPieChart.setTitle("메뉴별 판매금액 그래프");
+		rsPieChart.setData(FXCollections.observableArrayList(
+				new PieChart.Data("아메리카노" + mcount1, mcount1*1000),
+				new PieChart.Data("카푸치노" + mcount2, mcount2*2000),
+				new PieChart.Data("카페라떼" + mcount3, mcount3*3000)
+				));
+	}
+```
+![image](https://github.com/dldydgk/Javafx-Kiosk/assets/126844590/e5153eca-00a4-4527-8060-10f7f4258ae8)
 
 	
 
