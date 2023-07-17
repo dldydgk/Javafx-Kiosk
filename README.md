@@ -1,4 +1,4 @@
-![image](https://github.com/dldydgk/Javafx-Kiosk/assets/126844590/c6ee9709-1e74-4a04-b47b-54514f9d7a68)# Javafx-Kiosk
+# Javafx-Kiosk
 DB연결, javafx를 활용하여 키오스크 만들기
 ## 화면 구현
 ``` java
