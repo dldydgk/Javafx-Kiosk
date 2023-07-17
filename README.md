@@ -214,6 +214,102 @@ if(rs.next()) {
 ### 관리자 로그인 성공 시 화면에 나오는 창
 ![image](https://github.com/dldydgk/Javafx-Kiosk/assets/126844590/9d89d0f6-06be-4ad9-9725-ccedb3fb5f87)
 
+## Orderlist 클래스
+``` java
+public class Orderlist {
+	
+	//실제 테이블 뷰에 들어가는 각 칼럼들을 나타랠 수 있는 자료구조를 만들어야 함
+	//각 칼럼에 해당하는 변수 선언하기
+	//정수형, 날짜형, 문자형이 있지만,, 화면에 보이는건 모두 문자형 ==> 모두 string으로 선언
+	
+	//생성자 만들기(2가지==> 매개변수 없는거 + 매개변수 있는거)
+	String idx = "";
+	String date = "";
+	String count1 = "";
+	String count2 = "";
+	String count3 = "";
+	String sum = "";
+	
+	
+	//생성자 만들기
+	public Orderlist() {
+		super();
+	}
+
+
+	public Orderlist(String idx, String date, String count1, String count2, String count3, String sum) {
+		super();
+		this.idx = idx;
+		this.date = date;
+		this.count1 = count1;
+		this.count2 = count2;
+		this.count3 = count3;
+		this.sum = sum;
+	}
+
+	//게터, 세터 만들기
+	
+	public String getIdx() {
+		return idx;
+	}
+
+
+	public void setIdx(String idx) {
+		this.idx = idx;
+	}
+
+
+	public String getDate() {
+		return date;
+	}
+
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+
+	public String getCount1() {
+		return count1;
+	}
+
+
+	public void setCount1(String count1) {
+		this.count1 = count1;
+	}
+
+
+	public String getCount2() {
+		return count2;
+	}
+
+
+	public void setCount2(String count2) {
+		this.count2 = count2;
+	}
+
+
+	public String getCount3() {
+		return count3;
+	}
+
+
+	public void setCount3(String count3) {
+		this.count3 = count3;
+	}
+
+
+	public String getSum() {
+		return sum;
+	}
+
+
+	public void setSum(String sum) {
+		this.sum = sum;
+	}
+
+```
+
 ### Orderlist라는 클래스 선언 후 Getter/Setter 생성<br>
 바인딩 : 두 요소를 서로 연결하여 값이 동기화되도록 하는 개념이다. JavaFX에서 속성 바인딩은 한 객체의 속성이 다른 객체의 속성에 종속되어 변경되면 자동으로 동기화되는 매커니즘이다.<br>
 
