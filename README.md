@@ -1,4 +1,4 @@
-# Javafx-Kiosk
+![image](https://github.com/dldydgk/Javafx-Kiosk/assets/126844590/c6ee9709-1e74-4a04-b47b-54514f9d7a68)# Javafx-Kiosk
 DB연결, javafx를 활용하여 키오스크 만들기
 ## 화면 구현
 ``` java
@@ -97,6 +97,14 @@ Parent root = (BorderPane)FXMLLoader.load(getClass().getResource("Sample.fxml"))
 
 # 관리자 로그인 화면 구현
 #### 이제부터는 관리자 로그인 버튼을 눌렀을 시 DB에 접속한다
+
+## ADMIN_ACCOUNTS 테이블 모델
+![image](https://github.com/dldydgk/Javafx-Kiosk/assets/126844590/3ffa5f1a-4b8c-45ba-b74f-ac9d29294f75)
+
+## ORDERLIST_ACCOUNTS 테이블 모델
+![image](https://github.com/dldydgk/Javafx-Kiosk/assets/126844590/dc374dab-472e-49a0-8e9b-bc4131d3e7f0)
+
+
 ##### 먼저 관리자 로그인에 성공했을 시 화면에 나타나는 관리자 페이지를 가져오기 위한 코드이다
 ``` java
  @FXML
