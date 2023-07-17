@@ -207,9 +207,9 @@ if(rs.next()) {
 ![image](https://github.com/dldydgk/Javafx-Kiosk/assets/126844590/9d89d0f6-06be-4ad9-9725-ccedb3fb5f87)
 
 ### Orderlist라는 클래스 선언 후 Getter/Setter 생성<br>
-바인딩 : 두 요소를 서로 연결하여 값이 동기화되도록 하는 개념입니다. JavaFX에서 속성 바인딩은 한 객체의 속성이 다른 객체의 속성에 종속되어 변경되면 자동으로 동기화되는 매커니즘입니다.<br>
+바인딩 : 두 요소를 서로 연결하여 값이 동기화되도록 하는 개념이다. JavaFX에서 속성 바인딩은 한 객체의 속성이 다른 객체의 속성에 종속되어 변경되면 자동으로 동기화되는 매커니즘이다.<br>
 
-이 코드는 주문리스트 창을 초기화하고, 테이블 열과 모델 클래스의 속성을 바인딩하여 데이터를 표시하는 작업을 수행합니다.
+이 코드는 주문리스트 창을 초기화하고, 테이블 열과 모델 클래스의 속성을 바인딩하여 데이터를 표시하는 작업을 수행한다
 
 ``` java
 @FXML TableColumn<Orderlist, String>idxTableColumn;
@@ -233,6 +233,148 @@ if(rs.next()) {
 		
 	}
 ```
+### 전체 조회 버튼 클릭시 변수 초기화하고 db접속 후 쿼리 실행
+``` java
+@FXML
+	private void searchButtonAction(ActionEvent event) {
+		//변수 초기화
+		resultTextArea.setText("");
+		mcount1=0;
+		mcount2=0;
+		mcount3=0;
+		msum=0;
+		//디비 접속
+		//sql을 이용해서 데이터 검색하기
+		DBconnect3 conn = new DBconnect3();
+		Connection conn3 = conn.getconn();
 
---- 
+		//주문리스트 테이블에 있는 자료 검색하기
+		String sql = "select idx, to_char(order_time, 'yyyy-mm-dd hh24:mi:ss'), count1, count2, count3, sum "
+				+ " from ORDERLIST_ACCOUNTS"
+				+ " order by idx";
+		
+			try {
+				PreparedStatement ps = conn3.prepareStatement(sql);
+				ResultSet rs = ps.executeQuery();
+```
+### 주문리스트 데이터를 가져와서 테이블에 표시하고, 총 주문 수량과 판매 금액을 계산하여 텍스트 영역에 표시한다
+``` java
+ObservableList<Orderlist>datelist = FXCollections.observableArrayList();
+				while(rs.next()) {
+					datelist.add(
+							new Orderlist(
+									rs.getString(1),
+									rs.getString(2), 
+									rs.getString(3),
+									rs.getString(4),
+									rs.getString(5),
+									rs.getString(6)
+									)
+					);
+					mcount1=mcount1 + Integer.parseInt(rs.getString(3));
+					mcount2=mcount2 +Integer.parseInt(rs.getString(4));
+					mcount3=mcount3 +Integer.parseInt(rs.getString(5));
+					msum=msum +Integer.parseInt(rs.getString(6));
+				}
+				
+				//while문을 사용하여 주문한  칼럼의 수를 더하여 반복한다
+				orderlistTableView.setItems(datelist);
+				
+				resultTextArea.appendText("아메키라노 : " + mcount1 + "잔\n");
+				resultTextArea.appendText("카푸치노 : " + mcount2 + "잔\n");
+				resultTextArea.appendText("카페라떼 : " + mcount3 + "잔\n");
+				resultTextArea.appendText("총 판매금액 : " + msum + "원\n");
+					
+				ps.close();
+				rs.close();
+				conn3.close();
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+```
+### 시작 날짜 또는 종료 날짜가 비어 있으면 경고메세지를 띄운다
+``` java
+@FXML
+	private void datesearch2Button(ActionEvent event) {
+		//변수랑 textarea 초기화
+		if(startDatePicker.getValue() == null||endDatePicker.getValue()==null) {
+			//만약 시작날짜 또는 종료날짜가 비어 있으면 ==> 경고메세지
+			//그 외에는 
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("경고메세지");
+			alert.setContentText("시작날짜와 종료날짜를 모두 선택하세요");
+			alert.show();
+```
+### 그 외에는 DB에 접속하고 쿼리문을 실행한다
+``` java
+	DBconnect3 conn3 = new DBconnect3();
+			Connection conn = conn3.getconn();
+			
+			String sql = "select idx, order_time, count1, count2, count3, sum "
+					+ " from ORDERLIST_ACCOUNTS"
+					+ " where order_time >= ? and order_time <=?"
+					//+ " where order_time  between ? and ?"
+					+ " order by idx";
+			try {
+				PreparedStatement ps = conn.prepareStatement(sql);
+				ps.setString(1, startDatePicker.getValue().toString());
+				ps.setString(2, endDatePicker.getValue().plusDays(1).toString());
+				
+				ResultSet rs = ps.executeQuery();
+```
+### 주문리스트 데이터를 처리하여 ObservableList에 추가하고, 각 주문 항목의 수량을 계산하고, 텍스트 영역에 결과를 표시한다. 마지막으로, 데이터베이스 관련 객체들을 닫는다
+``` java
+ObservableList<Orderlist> datelist = FXCollections.observableArrayList();
+				resultTextArea.setText("");
+				mcount1=0;
+				mcount2=0;
+				mcount3=0;
+				msum=0;
+				while(rs.next()) {
+					datelist.add(
+							new Orderlist(
+									rs.getString(1),
+									rs.getString(2), 
+									rs.getString(3),
+									rs.getString(4),
+									rs.getString(5),
+									rs.getString(6)			
+									)
+					);
+					mcount1=mcount1 + Integer.parseInt(rs.getString(3));
+					mcount2=mcount2 +Integer.parseInt(rs.getString(4));
+					mcount3=mcount3 +Integer.parseInt(rs.getString(5));
+					msum=msum +Integer.parseInt(rs.getString(6));
+				}
+				
+				orderlistTableView.setItems(datelist);
+				resultTextArea.appendText("아메키라노 : " + mcount1 + "잔\n");
+				resultTextArea.appendText("카푸치노 : " + mcount2 + "잔\n");
+				resultTextArea.appendText("카페라떼 : " + mcount3 + "잔\n");
+				resultTextArea.appendText("총 판매금액 : " + msum + "원\n");
+
+				ps.close();
+				rs.close();
+				conn.close();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+```
+### 판매수량 그래프 버튼을 눌렀을 시 
+``` java
+@FXML
+	private void countButtonAction(ActionEvent evnet) {
+		rsPieChart.setTitle("메뉴별 판매수량 그래프");
+		rsPieChart.setData(FXCollections.observableArrayList(
+				new PieChart.Data("아메리카노 " + mcount1, mcount1),
+				new PieChart.Data("카푸치노" + mcount2, mcount2),
+				new PieChart.Data("카페라떼" + mcount3, mcount3)
+				));
+```
+	
+
+
+ 
 
