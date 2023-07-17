@@ -187,6 +187,52 @@ if(rs.next()) {
 					alert.show();
 				}
 ```
+### 관리자 로그인 화면 창
+![image](https://github.com/dldydgk/Javafx-Kiosk/assets/126844590/9c88101a-15a1-4149-b391-d0dfe365fba1)
+
+### 관리자 페이지를 닫거나 아이디 비번 자리에 들어있는 모든 값을 초기화한다
+``` java
+	@FXML
+	private void ClearButttonAction(ActionEvent event) {
+		IdTextField.setText("");
+		PwPasswordField.setText("");
+	}
+	@FXML
+	private void CloseButtonAction(ActionEvent event) {
+		Stage stage = (Stage)CloseButton.getScene().getWindow();
+				stage.close();
+	}
+```
+### 관리자 로그인 성공 시 화면에 나오는 창
+![image](https://github.com/dldydgk/Javafx-Kiosk/assets/126844590/9d89d0f6-06be-4ad9-9725-ccedb3fb5f87)
+
+### Orderlist라는 클래스 선언 후 Getter/Setter 생성<br>
+바인딩 : 두 요소를 서로 연결하여 값이 동기화되도록 하는 개념입니다. JavaFX에서 속성 바인딩은 한 객체의 속성이 다른 객체의 속성에 종속되어 변경되면 자동으로 동기화되는 매커니즘입니다.<br>
+
+이 코드는 주문리스트 창을 초기화하고, 테이블 열과 모델 클래스의 속성을 바인딩하여 데이터를 표시하는 작업을 수행합니다.
+
+``` java
+@FXML TableColumn<Orderlist, String>idxTableColumn;
+	@FXML TableColumn<Orderlist, String>dateTableColumn;
+	@FXML TableColumn<Orderlist, String>count1TableColumn;
+	@FXML TableColumn<Orderlist, String>count2TableColumn;
+	@FXML TableColumn<Orderlist, String>count3TableColumn;
+	@FXML TableColumn<Orderlist, String>sumTableColumn;
+	
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+
+		System.out.println("주문리스트 창이 열리고 초기화를 하려고 함");
+		
+		idxTableColumn.set CellValueFactory(new PropertyValueFactory<>("idx"));
+		dateTableColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+		count1TableColumn.setCellValueFactory(new PropertyValueFactory<>("count1"));
+		count2TableColumn.setCellValueFactory(new PropertyValueFactory<>("count2"));
+		count3TableColumn.setCellValueFactory(new PropertyValueFactory<>("count3"));
+		sumTableColumn.setCellValueFactory(new PropertyValueFactory<>("sum"));
+		
+	}
+```
 
 --- 
 
