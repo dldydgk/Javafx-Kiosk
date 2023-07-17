@@ -373,6 +373,8 @@ ObservableList<Orderlist> datelist = FXCollections.observableArrayList();
 				new PieChart.Data("카페라떼" + mcount3, mcount3)
 				));
 ```
+![image](https://github.com/dldydgk/Javafx-Kiosk/assets/126844590/35f36324-f459-499a-9242-d6593b7aebc0)
+
 	
 
 
